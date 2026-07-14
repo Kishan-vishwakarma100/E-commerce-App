@@ -1,343 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>ShopSmart | Online Shopping</title>
-
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ShopSmart</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- Header -->
-    <header class="header">
+<header>
+<div class="logo">ShopSmart</div>
 
-        <a href="#" class="brand">
-            ShopSmart
-        </a>
+<nav>
+<div class="menu" onclick="toggleMenu()">☰</div>
+<ul id="nav">
+<li><a href="#">Home</a></li>
+<li><a href="#products">Products</a></li>
+<li><a href="#cart-section">🛒 <span id="cart">0</span></a></li>
+</ul>
+</nav>
+</header>
 
-        <nav class="navbar">
 
-            <button class="menu-toggle" aria-label="Open Menu">
-                ☰
-            </button>
+<section class="hero">
+<div>
+<h1>Shop Smarter, Live Better</h1>
+<p>Premium products at affordable prices</p>
+<button onclick="scrollProducts()">Explore Products</button>
+</div>
+</section>
 
-            <ul class="nav-links">
 
-                <li>
-                    <a href="#">Home</a>
-                </li>
+<section>
+<div class="title"><h2>Categories</h2></div>
 
-                <li class="dropdown">
-                    <a href="#">
-                        Categories
-                    </a>
+<div class="category-container">
+<div class="category">💻<h3>Electronics</h3></div>
+<div class="category">👕<h3>Fashion</h3></div>
+<div class="category">🛒<h3>Groceries</h3></div>
+<div class="category">📚<h3>Books</h3></div>
+</div>
 
-                    <ul class="dropdown-list">
-                        <li><a href="#">Electronics</a></li>
-                        <li><a href="#">Fashion</a></li>
-                        <li><a href="#">Groceries</a></li>
-                        <li><a href="#">Books</a></li>
-                    </ul>
+</section>
 
-                </li>
 
-                <li>
-                    <a href="#products">
-                        Products
-                    </a>
-                </li>
+<section id="products-section">
 
-                <li>
-                    <a href="#deals">
-                        Deals
-                    </a>
-                </li>
+<div class="title"><h2>Products</h2></div>
 
-                <li>
-                    <a href="#contact">
-                        Contact
-                    </a>
-                </li>
+<div class="search-box">
+<input id="search" placeholder="Search products">
+</div>
 
-                <li>
-                    <a href="#">
-                        🛒 Cart
-                        <span id="cart-count">
-                            0
-                        </span>
-                    </a>
-                </li>
+<div class="products" id="products"></div>
 
-            </ul>
+</section>
 
-        </nav>
 
-    </header>
+<section id="cart-section">
 
+<div class="title"><h2>Your Cart</h2></div>
 
+<div id="cart-list"></div>
 
-    <!-- Hero Section -->
-    <main>
+</section>
 
-        <section class="hero">
 
-            <div class="hero-content">
+<section>
 
-                <h1>
-                    Shop Smarter, Live Better
-                </h1>
+<div class="deal">
+<h2>Mega Sale</h2>
+<p>Up to 50% discount available</p>
+</div>
 
-                <p>
-                    Discover quality products at the best prices.
-                </p>
+</section>
 
-                <button>
-                    Explore Products
-                </button>
 
-            </div>
+<footer>
+<h3>ShopSmart</h3>
+<p>© 2026 All Rights Reserved</p>
+</footer>
 
-        </section>
 
 
+<script>
 
-        <!-- Categories -->
-        <section class="categories">
+let allProducts=[];
+let cartItems=[];
 
-            <div class="section-header">
+function toggleMenu(){
+document.getElementById("nav").classList.toggle("active");
+}
 
-                <h2>
-                    Explore Categories
-                </h2>
 
-                <p>
-                    Find products according to your needs.
-                </p>
+async function getProducts(){
 
-            </div>
+let res=await fetch("https://fakestoreapi.com/products");
+allProducts=await res.json();
+displayProducts(allProducts);
 
+}
 
-            <div class="category-grid">
 
-
-                <article class="category-card">
-
-                    <span>
-                        💻
-                    </span>
-
-                    <h3>
-                        Electronics
-                    </h3>
-
-                    <p>
-                        Latest gadgets and devices
-                    </p>
-
-                </article>
-
-
-
-                <article class="category-card">
-
-                    <span>
-                        👕
-                    </span>
-
-                    <h3>
-                        Fashion
-                    </h3>
-
-                    <p>
-                        Trending styles and clothing
-                    </p>
-
-                </article>
-
-
-
-                <article class="category-card">
-
-                    <span>
-                        🛒
-                    </span>
-
-                    <h3>
-                        Groceries
-                    </h3>
-
-                    <p>
-                        Everyday essentials
-                    </p>
-
-                </article>
-
-
-
-                <article class="category-card">
-
-                    <span>
-                        📚
-                    </span>
-
-                    <h3>
-                        Books
-                    </h3>
-
-                    <p>
-                        Learn and explore
-                    </p>
-
-                </article>
-
-
-            </div>
-
-        </section>
-
-
-
-
-        <!-- Products -->
-        <section id="products" class="products">
-
-            <div class="section-header">
-
-                <h2>
-                    Featured Products
-                </h2>
-
-                <p>
-                    Handpicked products for you.
-                </p>
-
-            </div>
-
-
-            <div class="product-container" id="product-container">
-
-                <!-- Products loaded dynamically -->
-
-            </div>
-
-
-        </section>
-
-
-
-
-        <!-- Deals Section -->
-        <section id="deals" class="deals">
-
-
-            <h2>
-                Today's Deals
-            </h2>
-
-
-            <div class="deal-banner">
-
-                <h3>
-                    Special Discounts Available
-                </h3>
-
-                <p>
-                    Grab your favourite products before the offer ends.
-                </p>
-
-
-                <button>
-                    View Deals
-                </button>
-
-
-            </div>
-
-
-        </section>
-
-
-
-
-        <!-- Newsletter -->
-        <section class="newsletter">
-
-            <h2>
-                Stay Updated
-            </h2>
-
-            <p>
-                Subscribe for latest offers and product updates.
-            </p>
-
-
-            <form>
-
-                <input 
-                    type="email"
-                    placeholder="Enter your email"
-                    required
-                >
-
-                <button>
-                    Subscribe
-                </button>
-
-            </form>
-
-
-        </section>
-
-
-    </main>
-
-
-
-
-    <!-- Footer -->
-    <footer class="footer">
-
-
-        <div>
-
-            <h3>
-                ShopSmart
-            </h3>
-
-            <p>
-                Your trusted online shopping partner.
-            </p>
-
-        </div>
-
-
-
-        <div id="contact">
-
-            <h3>
-                Contact
-            </h3>
-
-            <p>
-                support@shopsmart.com
-            </p>
-
-        </div>
-
-
-        <p>
-            © 2026 ShopSmart. All rights reserved.
-        </p>
-
-
-    </footer>
-
-
+function displayProducts(products){
+let box=document.getElementById("products");
+box.innerHTML="";
+products.slice(0,12).forEach(p=>{
+box.innerHTML+=`
+<div class="product">
+<img src="${p.image}">
+<h3>${p.title.slice(0,45)}</h3>
+<div class="price">$${p.price}</div><br>
+<button onclick="addCart(${p.id})">
+Add To Cart
+</button>
+</div>
+`;
+
+});
+
+}
+
+function addCart(id){
+let product=allProducts.find(p=>p.id===id);
+cartItems.push(product);
+document.getElementById("cart").innerHTML=cartItems.length;
+showCart();
+
+}
+
+function showCart(){
+let box=document.getElementById("cart-list");
+box.innerHTML="";
+cartItems.forEach((p,i)=>{
+box.innerHTML+=`
+<div class="product">
+<img src="${p.image}">
+<h3>${p.title.slice(0,40)}</h3>
+<div class="price">$${p.price}</div><br>
+<button onclick="removeCart(${i})">
+Remove
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+function removeCart(i){
+cartItems.splice(i,1);
+document.getElementById("cart").innerHTML=cartItems.length;
+showCart();
+}
+
+document.getElementById("search").oninput=function(){
+let v=this.value.toLowerCase();
+displayProducts(
+allProducts.filter(p=>p.title.toLowerCase().includes(v))
+);
+
+}
+
+function scrollProducts(){
+document.getElementById("products-section")
+.scrollIntoView({behavior:"smooth"});
+
+}
+
+getProducts();
+
+</script>
 
 </body>
-
 </html>
